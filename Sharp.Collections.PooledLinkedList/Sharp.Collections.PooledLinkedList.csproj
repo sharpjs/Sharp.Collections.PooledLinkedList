@@ -21,12 +21,16 @@
 
   <PropertyGroup>
     <Description>A singly-Linked list with improved cache performance</Description>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net46;net47</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\General.cs" Link="Properties\General.cs" />
