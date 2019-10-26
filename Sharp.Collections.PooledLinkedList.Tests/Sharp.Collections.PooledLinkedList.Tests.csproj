@@ -22,10 +22,7 @@
   <PropertyGroup>
     <Description>Tests for Sharp.Collections.PooledLinkedList</Description>
     <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Sharp.Collections</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
