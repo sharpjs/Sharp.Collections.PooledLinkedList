@@ -41,4 +41,6 @@
     <Compile Include="..\General.cs" Link="Properties\General.cs" />
   </ItemGroup>
 
+  <Import Project="..\InheritDoc.targets" />
+
 </Project>
