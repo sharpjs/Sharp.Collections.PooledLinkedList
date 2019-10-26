@@ -23,6 +23,7 @@
     <Description>Tests for Sharp.Collections.PooledLinkedList</Description>
     <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
     <RootNamespace>Sharp.Collections</RootNamespace>
+    <NoWarn>CS1591</NoWarn> <!-- do not require documentation comments -->
   </PropertyGroup>
 
   <ItemGroup>
