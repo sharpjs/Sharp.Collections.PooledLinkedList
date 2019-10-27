@@ -31,7 +31,7 @@ namespace Sharp.Collections
         {
             private readonly NodePool _pool;
             private          NodeId   _next;
-            private          NodeId   _id;
+            private          T        _current;
 
             /// <summary>
             ///   Initializes a new <see cref="Enumerator"/> instance for the
@@ -42,13 +42,13 @@ namespace Sharp.Collections
             /// </param>
             internal Enumerator(PooledLinkedList<T> list)
             {
-                _pool = list._pool;
-                _next = list._head;
-                _id   = None;
+                _pool    = list._pool;
+                _next    = list._head;
+                _current = default!;
             }
 
             /// <inheritdoc/>
-            public T Current => _pool.GetItem(_id);
+            public T Current => _current;
 
             /// <inheritdoc/>
             object? IEnumerator.Current => Current;
@@ -56,11 +56,18 @@ namespace Sharp.Collections
             /// <inheritdoc/>
             public bool MoveNext()
             {
-                if (IsNone(_id = _next))
-                    return false;
+                var next = _next;
 
-                _next = _pool.GetNext(_next);
-                return true;
+                if (IsNone(next))
+                {
+                    _current = default!;
+                    return false;
+                }
+                else
+                {
+                    (_current, _next) = _pool.GetNode(next);
+                    return true;
+                }
             }
 
             /// <inheritdoc/>
