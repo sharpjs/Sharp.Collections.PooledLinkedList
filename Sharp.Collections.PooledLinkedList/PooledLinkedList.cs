@@ -215,7 +215,11 @@ namespace Sharp.Collections
 
         private void Remove(NodeId prev, NodeId node)
         {
-            Link(prev, _pool.GetNext(node));
+            var next = _pool.GetNext(node);
+                       _pool.Free   (node);
+
+            Link(prev, next);
+
             _count--;
         }
 
@@ -233,11 +237,9 @@ namespace Sharp.Collections
         /// <inheritdoc/>
         public void Clear()
         {
-            _pool.Free(_head);
-
+            _pool.Free();
             _head  = None;
             _tail  = None;
-
             _count = 0;
         }
 

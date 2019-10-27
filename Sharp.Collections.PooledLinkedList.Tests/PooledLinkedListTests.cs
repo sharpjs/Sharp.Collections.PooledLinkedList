@@ -97,6 +97,28 @@ namespace Sharp.Collections
         }
 
         [Test]
+        public void TryRemoveFirst_NotEmpty()
+        {
+            var list = new PooledLinkedList<string>();
+
+            list.AddLast("a");
+            list.AddLast("b");
+            list.AddLast("c");
+
+            var removed = list.TryRemoveFirst(out var item);
+
+            removed.Should().BeTrue();
+
+            item.Should().Be("a");
+
+            list.Should().HaveCount(2);
+            list.Should().Equal("b", "c");
+
+            list.Pool.Items.Should().Equal(null, "b", "c");
+            list.Pool.Nexts.Should().Equal(None, 2, None);
+        }
+
+        [Test]
         public void IsReadOnly()
         {
             var list = new PooledLinkedList<string>();

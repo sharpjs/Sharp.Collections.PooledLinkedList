@@ -40,8 +40,10 @@ namespace Sharp.Collections
             }
 
             // Test accessors
-            internal IReadOnlyList<T>      Items => _items;
-            internal IReadOnlyList<NodeId> Nexts => _nexts;
+            internal IReadOnlyList<T>      Items    => _items;
+            internal IReadOnlyList<NodeId> Nexts    => _nexts;
+            internal NodeId                FreeHead => _head;
+            internal NodeId                FreeTail => _tail;
 
             public T GetItem(NodeId id)
             {
@@ -107,22 +109,30 @@ namespace Sharp.Collections
                 return id;
             }
 
-            public void Free(NodeId id)
+            public void Free()
             {
-                var tail = _tail;
-                   _tail = id;
+                _items.Clear();
+                _nexts.Clear();
+                _head = None;
+                _tail = None;
+            }
 
-                if (IsNone(tail))
-                    _head = id;
+            public void Free(NodeId node)
+            {
+                Link(_tail, node);
+
+                SetNode(node, default!, None);
+            }
+
+            private void Link(NodeId node, NodeId next)
+            {
+                if (IsNone(node))
+                    _head = next;
                 else
-                    SetNext(tail, id);
+                    SetNext(node, next);
 
-                do
-                {
-                    SetItem(id, default!);
-                    id = GetNext(id);
-                }
-                while (IsSome(id));
+                if (IsNone(next))
+                    _tail = node;
             }
         }
     }
