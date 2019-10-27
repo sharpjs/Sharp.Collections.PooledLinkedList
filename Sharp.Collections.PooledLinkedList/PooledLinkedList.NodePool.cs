@@ -63,6 +63,17 @@ namespace Sharp.Collections
                 _nexts[id] = next;
             }
 
+            public (T Item, NodeId Next) GetNode(NodeId id)
+            {
+                return (_items[id], _nexts[id]);
+            }
+
+            public void SetNode(NodeId id, T item, NodeId next)
+            {
+                _items[id] = item;
+                _nexts[id] = next;
+            }
+
             public NodeId Store(T item)
             {
                 var head = _head;
