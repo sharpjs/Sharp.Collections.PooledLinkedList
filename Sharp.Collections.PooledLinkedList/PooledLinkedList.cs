@@ -17,12 +17,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using static Sharp.Collections.NodeIdHelpers;
 using NodeId = System.Int32;
-
-#if NULLABLE
-using System.Diagnostics.CodeAnalysis;
-#endif
 
 namespace Sharp.Collections
 {
@@ -121,11 +118,7 @@ namespace Sharp.Collections
         /// <returns>
         ///   <c>true</c> if an item was removed; <c>false</c> otherwise.
         /// </returns>
-#if NULLABLE
         public bool TryRemoveFirst([MaybeNullWhen(false)] out T item)
-#else
-        public bool TryRemoveFirst(out T item)
-#endif
         {
             var head = _head;
 
@@ -155,12 +148,7 @@ namespace Sharp.Collections
         /// <returns>
         ///   <c>true</c> if an item was removed; <c>false</c> otherwise.
         /// </returns>
-        public bool TryRemoveFirst(
-            Func<T, bool> predicate,
-#if NULLABLE
-            [MaybeNullWhen(false)]
-#endif
-            out T item)
+        public bool TryRemoveFirst(Func<T, bool> predicate, [MaybeNullWhen(false)] out T item)
         {
             if (predicate is null)
                 throw new ArgumentNullException(nameof(predicate));
@@ -208,10 +196,7 @@ namespace Sharp.Collections
             Func<T, bool> predicate,
             ref NodeId    prev,
             ref NodeId    node,
-#if NULLABLE
-            [MaybeNullWhen(false)]
-#endif
-            out T item)
+            [MaybeNullWhen(false)] out T item)
         {
             while (IsSome(node))
             {
