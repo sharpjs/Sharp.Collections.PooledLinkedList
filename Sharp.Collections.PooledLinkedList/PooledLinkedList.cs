@@ -127,17 +127,17 @@ namespace Sharp.Collections
         public bool TryRemoveFirst(out T item)
 #endif
         {
-            var id = _head;
+            var head = _head;
 
-            if (IsNone(id))
+            if (IsNone(head))
             {
                 item = default!;
                 return false;
             }
 
-            item = _pool.GetItem(id);
+            item = _pool.GetItem(head);
 
-            Remove(None, id);
+            Remove(None, head);
             return true;
         }
 
@@ -206,22 +206,22 @@ namespace Sharp.Collections
 
         private bool Search(
             Func<T, bool> predicate,
-            ref NodeId    previousId,
-            ref NodeId    id,
+            ref NodeId    prev,
+            ref NodeId    node,
 #if NULLABLE
             [MaybeNullWhen(false)]
 #endif
             out T item)
         {
-            while (IsSome(id))
+            while (IsSome(node))
             {
-                item = _pool.GetItem(id);
+                item = _pool.GetItem(node);
 
                 if (predicate(item))
                     return true;
 
-                previousId = id;
-                id = _pool.GetNext(id);
+                prev = node;
+                node = _pool.GetNext(node);
             }
 
             item = default!;
