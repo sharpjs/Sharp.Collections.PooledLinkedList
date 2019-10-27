@@ -103,9 +103,7 @@ namespace Sharp.Collections
                 if (IsNone(head))
                     _tail = None;
 
-                SetItem(id, item);
-                SetNext(id, None);
-
+                SetNode(id, item, None);
                 return id;
             }
 
