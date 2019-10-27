@@ -25,7 +25,7 @@ namespace Sharp.Collections
     partial class PooledLinkedList<T>
     {
         /// <summary>
-        ///   Enumerates the items of a <see cref="PooledLinkedList{T}"/>.
+        ///   Enumerates the elements of a <see cref="PooledLinkedList{T}"/>.
         /// </summary>
         public struct Enumerator : IEnumerator<T>
         {
@@ -70,7 +70,12 @@ namespace Sharp.Collections
                 }
             }
 
-            /// <inheritdoc/>
+            /// <summary>
+            ///   Not supported.
+            /// </summary>
+            /// <exception cref="NotSupportedException">
+            ///   Always thrown.
+            /// </exception>
             void IEnumerator.Reset() => throw new NotSupportedException();
 
             /// <inheritdoc/>
